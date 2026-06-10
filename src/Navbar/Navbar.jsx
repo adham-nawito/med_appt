@@ -15,6 +15,7 @@ function Navbar() {
       <div className={`navbar-items${menuOpen ? ' open' : ''}`}>
         <Link to="/">Home</Link>
         <Link to="/instant-consultation">Instant Consultation</Link>
+        <Link to="/doctors">Doctors</Link>
         <Link to="/reviews">Reviews</Link>
         <a href="#Appointments">Appointments</a>
         <Link to="/signup"><button className="btn-secondary" type="button">Sign Up</button></Link>

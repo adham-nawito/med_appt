@@ -1,0 +1,123 @@
+.doctor-card-container {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  display: inline-block;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.doctor-card-details-container {
+  padding: 20px;
+}
+
+.doctor-card-profile-image-container {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.doctor-card-profile-image-container img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.doctor-card-details {
+  text-align: center;
+}
+
+.doctor-card-detail-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.doctor-card-detail-speciality {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.doctor-card-detail-experience {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.doctor-card-detail-consultationfees {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.card-star {
+  font-size: 18px;
+  color: #ccc;
+}
+
+.card-star.filled {
+  color: #f59e0b;
+}
+
+.doctor-card-options-container {
+  padding: 0 20px 20px;
+  text-align: center;
+}
+
+.book-appointment-btn {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0;
+}
+
+.book-appointment-btn:hover {
+  background-color: #2980b9;
+}
+
+.book-appointment-btn div:nth-child(2) {
+  font-size: 12px;
+  font-weight: bold;
+  opacity: 0.85;
+}
+
+.booked-info {
+  font-size: 13px;
+  color: #1a7a3f;
+  background: #e6f4ea;
+  border-radius: 6px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.booked-info p {
+  margin: 0 0 8px;
+}
+
+.cancel-booking-btn {
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  width: auto;
+  margin-top: 0;
+}
+
+.cancel-booking-btn:hover {
+  background-color: #b91c1c;
+}

@@ -5,6 +5,7 @@ import './Navbar.css'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
 
   return (
     <nav className="navbar">
@@ -19,6 +20,23 @@ function Navbar() {
         <a href="#Appointments">Appointments</a>
         <Link to="/signup"><button className="btn-secondary" type="button">Sign Up</button></Link>
         <Link to="/login"><button className="btn-primary" type="button">Login</button></Link>
+
+        <div className="profile-dropdown">
+          <button
+            className="profile-dropdown-trigger"
+            onClick={() => setProfileOpen(!profileOpen)}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            </svg>
+            ▾
+          </button>
+          {profileOpen && (
+            <div className="profile-dropdown-menu">
+              <Link to="/profile" onClick={() => setProfileOpen(false)}>My Profile</Link>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   )

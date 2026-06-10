@@ -1,16 +1,8 @@
-import { useState } from 'react'
+import { useAppointment } from './AppointmentContext'
 import './Notification.css'
 
 function Notification({ children }) {
-  const [appointment, setAppointment] = useState(null)
-
-  const bookAppointment = (details) => {
-    setAppointment(details)
-  }
-
-  const cancelAppointment = () => {
-    setAppointment(null)
-  }
+  const { appointment, cancelAppointment } = useAppointment()
 
   return (
     <>
@@ -22,7 +14,6 @@ function Notification({ children }) {
           <button className="notification-cancel" onClick={cancelAppointment}>Cancel Appointment</button>
         </div>
       )}
-      {/* Pass booking controls down via a render-prop style context if needed */}
       {children}
     </>
   )

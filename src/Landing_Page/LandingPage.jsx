@@ -1,6 +1,13 @@
+import { useAppointment } from '../Notification/AppointmentContext'
 import './LandingPage.css'
 
 function LandingPage() {
+  const { bookAppointment } = useAppointment()
+
+  const handleBook = () => {
+    bookAppointment({ doctor: 'Dr. Smith', date: '2026-06-15', time: '10:00 AM' })
+  }
+
   return (
     <section className="hero-section">
       <div>
@@ -20,6 +27,9 @@ function LandingPage() {
           </h4>
           <a href="#services">
             <button className="button">Get Started</button>
+          </a>
+          <a href="#book-appointment">
+            <button className="button" onClick={handleBook}>Book Appointment</button>
           </a>
         </div>
       </div>

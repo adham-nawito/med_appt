@@ -1,0 +1,29 @@
+.notification-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e6f4ea;
+  border-left: 4px solid #34a853;
+  color: #1e4d2b;
+  padding: 12px 20px;
+  font-size: 14px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.notification-cancel {
+  background-color: #d93025;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-top: 0;
+  width: auto;
+}
+
+.notification-cancel:hover {
+  background-color: #b52d22;
+}

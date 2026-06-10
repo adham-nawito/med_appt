@@ -18,7 +18,7 @@ const FindDoctorSearch = ({ onSearch }) => {
         if (onSearch) {
             onSearch(speciality);
         } else {
-            navigate(`/doctors?speciality=${speciality}`);
+            navigate(`/appointments?speciality=${speciality}`);
         }
     }
 

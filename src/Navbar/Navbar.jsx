@@ -14,7 +14,6 @@ function Navbar() {
       <button className="hamburger" aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>&#9776;</button>
       <div className={`navbar-items${menuOpen ? ' open' : ''}`}>
         <Link to="/">Home</Link>
-        <Link to="/instant-consultation">Instant Consultation</Link>
         <Link to="/doctors">Doctors</Link>
         <Link to="/reviews">Reviews</Link>
         <a href="#Appointments">Appointments</a>

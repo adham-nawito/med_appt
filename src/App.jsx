@@ -8,6 +8,7 @@ import { AppointmentProvider } from './Notification/AppointmentContext'
 import ReviewForm from './Components/ReviewForm/ReviewForm'
 import BookingConsultation from './Components/BookingConsultation'
 import ProfileCard from './Components/ProfileCard/ProfileCard'
+import ReportsLayout from './Components/ReportsLayout/ReportsLayout'
 import './App.css'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path="/reviews" element={<ReviewForm />} />
               <Route path="/doctors" element={<BookingConsultation />} />
               <Route path="/profile" element={<ProfileCard />} />
+              <Route path="/reports" element={<ReportsLayout />} />
             </Routes>
           </Notification>
         </AppointmentProvider>

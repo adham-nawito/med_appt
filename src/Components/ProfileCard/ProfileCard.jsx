@@ -7,14 +7,17 @@ function ProfileCard() {
   const [userDetails, setUserDetails] = useState({});
   const [updatedDetails, setUpdatedDetails] = useState({});
   const [editMode, setEditMode] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [apiError, setApiError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const authtoken = sessionStorage.getItem('auth-token');
-    if (!authtoken) {
-      navigate('/login');
-    } else {
+    if (authtoken) {
       fetchUserProfile();
+    } else {
+      navigate('/login');
     }
   }, [navigate]);
 
@@ -38,21 +41,44 @@ function ProfileCard() {
         throw new Error('Failed to fetch user profile');
       }
     } catch (error) {
-      console.error(error);
+      setApiError(error.message || 'Could not load profile. Please try again.');
     }
   };
 
   const handleEdit = () => {
     setUpdatedDetails(userDetails);
+    setFieldErrors({});
+    setApiError('');
     setEditMode(true);
   };
 
   const handleInputChange = (e) => {
     setUpdatedDetails({ ...updatedDetails, [e.target.name]: e.target.value });
+    setFieldErrors({ ...fieldErrors, [e.target.name]: '' });
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!updatedDetails.name || updatedDetails.name.trim().length < 4) {
+      errors.name = 'Name must be at least 4 characters.';
+    }
+    if (!updatedDetails.phone || updatedDetails.phone.replace(/\D/g, '').length < 10) {
+      errors.phone = 'Phone must be at least 10 digits.';
+    }
+    return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError('');
+
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setLoading(true);
     try {
       const authtoken = sessionStorage.getItem('auth-token');
       const email = sessionStorage.getItem('email');
@@ -77,13 +103,15 @@ function ProfileCard() {
         sessionStorage.setItem('phone', updatedDetails.phone);
         setUserDetails(updatedDetails);
         setEditMode(false);
-        alert('Profile Updated Successfully!');
         navigate('/');
       } else {
-        throw new Error('Failed to update profile');
+        const data = await response.json().catch(() => ({}));
+        setApiError(data.message || 'Failed to update profile. Please try again.');
       }
     } catch (error) {
-      console.error(error);
+      setApiError(error.message || 'Network error. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,12 +124,22 @@ function ProfileCard() {
           </svg>
         </div>
 
+        {apiError && !editMode && (
+          <div className="profile-api-error">{apiError}</div>
+        )}
+
         {editMode ? (
           <form className="profile-form" onSubmit={handleSubmit}>
             <h2>Edit Profile</h2>
+
+            {apiError && (
+              <div className="profile-api-error">{apiError}</div>
+            )}
+
             <div className="profile-field">
-              <label>Email</label>
+              <label htmlFor="profile-email">Email</label>
               <input
+                id="profile-email"
                 type="email"
                 name="email"
                 value={userDetails.email || ''}
@@ -109,28 +147,43 @@ function ProfileCard() {
               />
             </div>
             <div className="profile-field">
-              <label>Name</label>
+              <label htmlFor="profile-name">Name</label>
               <input
+                id="profile-name"
                 type="text"
                 name="name"
                 value={updatedDetails.name || ''}
                 onChange={handleInputChange}
-                required
               />
+              {fieldErrors.name && (
+                <span className="profile-error">{fieldErrors.name}</span>
+              )}
             </div>
             <div className="profile-field">
-              <label>Phone</label>
+              <label htmlFor="profile-phone">Phone</label>
               <input
+                id="profile-phone"
                 type="tel"
                 name="phone"
                 value={updatedDetails.phone || ''}
                 onChange={handleInputChange}
-                required
               />
+              {fieldErrors.phone && (
+                <span className="profile-error">{fieldErrors.phone}</span>
+              )}
             </div>
             <div className="profile-actions">
-              <button type="submit" className="profile-save-btn">Save</button>
-              <button type="button" className="profile-cancel-btn" onClick={() => setEditMode(false)}>Cancel</button>
+              <button type="submit" className="profile-save-btn" disabled={loading}>
+                {loading ? 'Saving...' : 'Save'}
+              </button>
+              <button
+                type="button"
+                className="profile-cancel-btn"
+                onClick={() => { setEditMode(false); setApiError(''); setFieldErrors({}); }}
+                disabled={loading}
+              >
+                Cancel
+              </button>
             </div>
           </form>
         ) : (
@@ -152,7 +205,9 @@ function ProfileCard() {
               </div>
               <div className="profile-detail-item">
                 <span className="detail-label">Member Since</span>
-                <span className="detail-value">{userDetails.createdAt ? new Date(userDetails.createdAt).toLocaleDateString() : ''}</span>
+                <span className="detail-value">
+                  {userDetails.createdAt ? new Date(userDetails.createdAt).toLocaleDateString() : ''}
+                </span>
               </div>
             </div>
             <button className="profile-edit-btn" onClick={handleEdit}>Edit Profile</button>

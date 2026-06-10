@@ -34,6 +34,7 @@ function Navbar() {
           {profileOpen && (
             <div className="profile-dropdown-menu">
               <Link to="/profile" onClick={() => setProfileOpen(false)}>My Profile</Link>
+              <Link to="/reports" onClick={() => setProfileOpen(false)}>Your Reports</Link>
             </div>
           )}
         </div>

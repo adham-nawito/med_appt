@@ -103,7 +103,7 @@ function ProfileCard() {
         sessionStorage.setItem('phone', updatedDetails.phone);
         setUserDetails(updatedDetails);
         setEditMode(false);
-        navigate('/');
+        navigate('/profile');
       } else {
         const data = await response.json().catch(() => ({}));
         setApiError(data.message || 'Failed to update profile. Please try again.');

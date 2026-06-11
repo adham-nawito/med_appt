@@ -83,6 +83,24 @@
   color: var(--color-primary);
 }
 
+.profile-dropdown-logout {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #dc2626;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  margin-top: 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.profile-dropdown-logout:hover {
+  background-color: #fff5f5;
+}
+
 @media (max-width: 768px) {
   .hamburger {
     display: block;

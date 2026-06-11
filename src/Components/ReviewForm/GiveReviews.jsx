@@ -4,6 +4,7 @@ import './ReviewForm.css';
 function GiveReviews({ doctor, onSubmit, onClose }) {
   const [formData, setFormData] = useState({ name: '', review: '', rating: 0 });
   const [showWarning, setShowWarning] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,6 +20,7 @@ function GiveReviews({ doctor, onSubmit, onClose }) {
       setShowWarning(true);
       return;
     }
+    setSubmitted(true);
     onSubmit({ ...formData, doctor });
   };
 
@@ -36,6 +38,7 @@ function GiveReviews({ doctor, onSubmit, onClose }) {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              disabled={submitted}
             />
           </div>
           <div className="form-group">
@@ -46,6 +49,7 @@ function GiveReviews({ doctor, onSubmit, onClose }) {
               value={formData.review}
               onChange={handleChange}
               rows={4}
+              disabled={submitted}
             />
           </div>
           <div className="form-group">
@@ -55,7 +59,7 @@ function GiveReviews({ doctor, onSubmit, onClose }) {
                 <span
                   key={star}
                   className={`star ${formData.rating >= star ? 'filled' : ''}`}
-                  onClick={() => handleRating(star)}
+                  onClick={() => !submitted && handleRating(star)}
                 >
                   ★
                 </span>
@@ -63,7 +67,9 @@ function GiveReviews({ doctor, onSubmit, onClose }) {
             </div>
           </div>
           <div className="modal-actions">
-            <button type="submit" className="submit-btn">Submit</button>
+            <button type="submit" className="submit-btn" disabled={submitted}>
+              {submitted ? 'Review Given' : 'Submit'}
+            </button>
             <button type="button" className="cancel-btn" onClick={onClose}>Cancel</button>
           </div>
         </form>

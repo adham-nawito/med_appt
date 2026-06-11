@@ -1,11 +1,22 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import findLogo from '../assets/find.png'
 import './Navbar.css'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
+  const navigate = useNavigate()
+  const isLoggedIn = !!sessionStorage.getItem('auth-token')
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('auth-token')
+    sessionStorage.removeItem('email')
+    sessionStorage.removeItem('name')
+    sessionStorage.removeItem('phone')
+    setProfileOpen(false)
+    navigate('/')
+  }
 
   return (
     <nav className="navbar">
@@ -17,8 +28,12 @@ function Navbar() {
         <Link to="/">Home</Link>
         <Link to="/appointments">Appointments</Link>
         <Link to="/reviews">Reviews</Link>
-        <Link to="/signup"><button className="btn-secondary" type="button">Sign Up</button></Link>
-        <Link to="/login"><button className="btn-primary" type="button">Login</button></Link>
+        {!isLoggedIn && (
+          <>
+            <Link to="/signup"><button className="btn-secondary" type="button">Sign Up</button></Link>
+            <Link to="/login"><button className="btn-primary" type="button">Login</button></Link>
+          </>
+        )}
 
         <div className="profile-dropdown">
           <button
@@ -34,6 +49,9 @@ function Navbar() {
             <div className="profile-dropdown-menu">
               <Link to="/profile" onClick={() => setProfileOpen(false)}>My Profile</Link>
               <Link to="/reports" onClick={() => setProfileOpen(false)}>Your Reports</Link>
+              {isLoggedIn && (
+                <button className="profile-dropdown-logout" onClick={handleLogout}>Logout</button>
+              )}
             </div>
           )}
         </div>
